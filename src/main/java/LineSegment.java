@@ -28,7 +28,16 @@ public class LineSegment {
             TimeType startTime) {
         boolean busIsFull = numberOfPassengers.get(startTime) < capacity;
         TimeType arrival = TimeType.plus(departure, timeToNextStop);
-        if (!busIsFull) nextStop.updateReachableAt(arrival, Optional.of(lineName));
+        if (!busIsFull) {
+            try {
+                TimeType currentReachableTime = nextStop.getReachableAtTime();
+                if (currentReachableTime.compareTo(arrival) > 0) {
+                    nextStop.updateReachableAt(arrival, Optional.of(lineName));
+                }
+            } catch (IllegalArgumentException e) {
+                nextStop.updateReachableAt(arrival, Optional.of(lineName));
+            }
+        }
         return new Triplet<>(arrival, nextStop.getName(), !busIsFull);
     }
 
