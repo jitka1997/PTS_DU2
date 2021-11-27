@@ -51,9 +51,9 @@ public class Line {
         Map.Entry<TimeType, TimeType> bestBus = null;
         for (int i = 0; i < startingTimes.size(); i++) {
             TimeType tmp = TimeType.plus(startingTimes.get(i), duration);
-            if (tmp.isLowerOrEqual(time)) {
+            if (tmp.compareTo(time) <= 0) {
                 if (bestBus == null) bestBus = Map.entry(tmp, startingTimes.get(i));
-                else if (startingTimes.get(i).isLowerOrEqual(bestBus.getValue()))
+                else if (startingTimes.get(i).compareTo(bestBus.getValue()) <= 0)
                     bestBus = Map.entry(tmp, startingTimes.get(i));
             }
         }

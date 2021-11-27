@@ -1,15 +1,12 @@
-public class TimeType {
+public class TimeType implements Comparable<TimeType> {
     private long time;
-    private final long mod;
 
     public TimeType(long time) {
         this.time = time;
-        mod = 1000;
     }
 
     public TimeType(TimeType time) {
         this.time = time.getTime();
-        mod = 1000;
     }
 
     public long getTime() {
@@ -21,11 +18,11 @@ public class TimeType {
     }
 
     public void add(TimeType time) {
-        setTime((time.getTime() + this.time) % mod);
+        setTime(time.getTime() + this.time);
     }
 
     public void subtract(TimeType time) {
-        setTime(((time.getTime() - this.time) + mod) % mod);
+        setTime(time.getTime() - this.time);
     }
 
     public static TimeType plus(TimeType time1, TimeType time2) {
@@ -40,7 +37,8 @@ public class TimeType {
         return newTime;
     }
 
-    public boolean isLowerOrEqual(TimeType time) {
-        return this.equals(time) || (this.time < time.getTime());
+    @Override
+    public int compareTo(TimeType time) {
+        return (int) minus(this, time).getTime();
     }
 }
