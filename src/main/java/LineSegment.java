@@ -8,16 +8,15 @@ public class LineSegment {
     private final Map<TimeType, Integer> numberOfPassengers;
     private final int capacity;
     private final LineNameType lineName;
-    private final Stop nextStop;
+    private final StopInterface nextStop;
 
     public LineSegment(TimeDiffType timeToNextStop, Map<TimeType, Integer> numberOfPassengers,
-            int capacity, LineNameType lineName, StopNameType nextStop,
-            StopFactoryInterface stopFactory) {
+            int capacity, LineNameType lineName, StopNameType nextStop) {
         this.timeToNextStop = timeToNextStop;
         this.numberOfPassengers = numberOfPassengers;
         this.capacity = capacity;
         this.lineName = lineName;
-        this.nextStop = stopFactory.createStop(nextStop);
+        this.nextStop = new StopProxy(nextStop);
     }
 
     public Map.Entry<TimeType, StopNameType> nextStop(TimeType startTime) {
