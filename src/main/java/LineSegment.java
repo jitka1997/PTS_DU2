@@ -1,4 +1,7 @@
+import org.javatuples.Triplet;
+
 import java.util.Map;
+import java.util.Optional;
 
 public class LineSegment {
     private final TimeDiffType timeToNextStop;
@@ -15,5 +18,22 @@ public class LineSegment {
         this.capacity = capacity;
         this.lineName = lineName;
         this.nextStop = stopFactory.createStop(nextStop);
+    }
+
+    public Map.Entry<TimeType, StopNameType> nextStop(TimeType startTime) {
+        return Map.entry(TimeType.plus(startTime, timeToNextStop), nextStop.getName());
+    }
+
+    public Triplet<TimeType, StopNameType, Boolean> nextStopAndUpdateReachable(TimeType departure,
+            TimeType startTime) {
+        boolean busIsFull = numberOfPassengers.get(startTime) < capacity;
+        TimeType arrival = TimeType.plus(departure, timeToNextStop);
+        if (!busIsFull) nextStop.updateReachableAt(arrival, Optional.of(lineName));
+        return new Triplet<>(arrival, nextStop.getName(), !busIsFull);
+    }
+
+    public void incrementCapacity(TimeType time) {
+        //TODO asi aj zapisat do databazy, nech sa to ulozi pre dalsie vyhladavania
+        numberOfPassengers.put(time, numberOfPassengers.get(time) + 1);
     }
 }

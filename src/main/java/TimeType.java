@@ -1,15 +1,46 @@
-import java.sql.Time;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-
 public class TimeType {
-    private final Time time;
+    private long time;
+    private final long mod;
 
-    public TimeType(String time) throws ParseException {
-        this.time = new Time(new SimpleDateFormat("hh-mm").parse(time).getTime());
+    public TimeType(long time) {
+        this.time = time;
+        mod = 1000;
     }
 
-    public Time getTime() {
+    public TimeType(TimeType time) {
+        this.time = time.getTime();
+        mod = 1000;
+    }
+
+    public long getTime() {
         return time;
+    }
+
+    private void setTime(long time) {
+        this.time = time;
+    }
+
+    public void add(TimeType time) {
+        setTime((time.getTime() + this.time) % mod);
+    }
+
+    public void subtract(TimeType time) {
+        setTime(((time.getTime() - this.time) + mod) % mod);
+    }
+
+    public static TimeType plus(TimeType time1, TimeType time2) {
+        TimeType newTime = new TimeType(time1);
+        newTime.add(time2);
+        return newTime;
+    }
+
+    public static TimeType minus(TimeType time1, TimeType time2) {
+        TimeType newTime = new TimeType(time1);
+        newTime.subtract(time2);
+        return newTime;
+    }
+
+    public boolean isLowerOrEqual(TimeType time) {
+        return this.equals(time) || (this.time < time.getTime());
     }
 }
