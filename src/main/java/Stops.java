@@ -4,12 +4,20 @@ import java.util.Map;
 import java.util.Optional;
 
 public class Stops {
-    private Map<StopNameType, Stop> stops;
-    private final StopFactoryInterface stopFactory;
+    private final Map<StopNameType, Stop> stops = new HashMap<>();
+    private static StopFactoryInterface stopFactory = null;
+    private static Stops instance = null;
 
-    public Stops(StopFactoryInterface stopFactory) {
-        this.stopFactory = stopFactory;
-        stops = new HashMap<>();
+    private Stops() {
+    }
+
+    public static Stops getInstance() {
+        return instance;
+    }
+
+    public static void initialize(StopFactoryInterface stopFactory) {
+        Stops.stopFactory = stopFactory;
+        instance = new Stops();
     }
 
     public void setStartingStop(StopNameType stopName, TimeType startTime) {
@@ -39,5 +47,10 @@ public class Stops {
 
     public Map.Entry<TimeType, LineNameType> getReachableAt(StopNameType stopName) {
         return stops.get(stopName).getReachableAt();
+    }
+
+    public Stop makeStop(StopNameType stopName) {
+        stops.put(stopName, stopFactory.createStop(stopName));
+        return stops.get(stopName);
     }
 }

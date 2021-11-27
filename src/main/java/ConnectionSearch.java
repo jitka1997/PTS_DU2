@@ -15,7 +15,8 @@ public class ConnectionSearch {
     }
 
     public ConnectionDataType search(StopNameType from, StopNameType to, TimeType startTime) {
-        stops = new Stops(stopFactory);
+        Stops.initialize(stopFactory);
+        stops = Stops.getInstance();
         lines = new Lines(lineFactory, lineSegmentFactory);
         stops.setStartingStop(from, startTime);
         StopNameType nextStop;
