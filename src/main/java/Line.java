@@ -9,40 +9,47 @@ public class Line {
     private final List<TimeType> startingTimes;
     private final StopNameType firstStop;
     private final List<LineSegment> lineSegments;
-    private int numberOfLineSegments;
-    private boolean seenStopName;
-    private LineSegmentFactoryInterface lineSegmentFactory;
+    private final int numberOfLineSegments;
+    private final LineSegmentFactoryInterface lineSegmentFactory;
 
     public Line(LineNameType name, List<TimeType> startingTimes, StopNameType firstStop,
             int numberOfLineSegments, LineSegmentFactoryInterface lineSegmentFactory) {
         this.name = name;
         this.numberOfLineSegments = numberOfLineSegments;
+        this.lineSegmentFactory = lineSegmentFactory;
         this.startingTimes = startingTimes;
         this.firstStop = firstStop;
         this.lineSegments = new ArrayList<>();
-        seenStopName = false;
     }
 
     private LineSegment getOrLoad(int i) {
         if (i < lineSegments.size()) return lineSegments.get(i);
-        return lineSegmentFactory.createLineSegment(name, i);
+        lineSegments.add(lineSegmentFactory.createLineSegment(name, i));
+        return lineSegments.get(i);
     }
 
-    public void updateReachable(StopNameType stopName, TimeType time) {
-        //find duration from firstStop to stopName
+    private Map.Entry<TimeType, Integer> durationFromFirstStop(StopNameType to) {
+        int toUpdate = 0;
         StopNameType previousNextStop = firstStop;
         TimeType duration = new TimeDiffType(0);
-        int toUpdate = 0;
         for (int i = 0; i < numberOfLineSegments; i++) {
             LineSegment lineSegment = getOrLoad(i);
-            if (previousNextStop.equals(stopName)) {
-                toUpdate = i + 1;
+            if (previousNextStop.equals(to)) {
+                toUpdate = i;
                 break;
             }
             Map.Entry<TimeType, StopNameType> pair = lineSegment.nextStop(duration);
             duration = pair.getKey();
             previousNextStop = pair.getValue();
         }
+        return Map.entry(duration, toUpdate);
+    }
+
+    public void updateReachable(StopNameType stopName, TimeType time) {
+        //find duration from firstStop to stopName
+        Map.Entry<TimeType, Integer> pair = durationFromFirstStop(stopName);
+        int toUpdate = pair.getValue() + 1;
+        TimeType duration = pair.getKey();
 
         // if stopName is last stop do nothing
         if (toUpdate == numberOfLineSegments) return;
@@ -64,6 +71,25 @@ public class Line {
         // update stopName's reachableAt
         LineSegment lineSegment = getOrLoad(toUpdate);
         lineSegment.nextStopAndUpdateReachable(bestBus.getValue(), bestBus.getKey());
+    }
+
+    public StopNameType updateCapacityAndGetPreviousStop(StopNameType stopName, TimeType arrival) {
+        Map.Entry<TimeType, Integer> pair = durationFromFirstStop(stopName);
+        int toUpdate = pair.getValue() - 1;
+        TimeType duration = pair.getKey();
+
+        // there was no journey before this stop
+        if (toUpdate < 0) return firstStop;
+
+        //update capacity
+        TimeType starTime = null;
+        for (TimeType startingTime : startingTimes) {
+            if (TimeType.minus(arrival, startingTime).equals(duration)) starTime = startingTime;
+        }
+        lineSegments.get(toUpdate).incrementCapacity(starTime);
+
+        // previous stop
+        return lineSegments.get(toUpdate).getNextStopName();
     }
 
     public LineNameType getName() {

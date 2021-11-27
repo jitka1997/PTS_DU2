@@ -26,7 +26,6 @@ public class Lines {
 
     public StopNameType updateCapacityAndGetPreviousStop(LineNameType lineName,
             StopNameType stopName, TimeType time) {
-        // TODO: implementovat
-        return null;
+        return lines.get(lineName).updateCapacityAndGetPreviousStop(stopName, time);
     }
 }

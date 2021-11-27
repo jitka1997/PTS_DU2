@@ -36,4 +36,8 @@ public class LineSegment {
         //TODO asi aj zapisat do databazy, nech sa to ulozi pre dalsie vyhladavania
         numberOfPassengers.put(time, numberOfPassengers.get(time) + 1);
     }
+
+    public StopNameType getNextStopName() {
+        return nextStop.getName();
+    }
 }
