@@ -4,10 +4,12 @@ import java.util.Map;
 
 public class Lines {
     private final Map<LineNameType, Line> lines;
-    private final LinesFactoryInterface linesFactory;
+    private final LineFactoryInterface lineFactory;
+    private final LineSegmentFactoryInterface lineSegmentFactory;
 
-    public Lines(LinesFactoryInterface linesFactory) {
-        this.linesFactory = linesFactory;
+    public Lines(LineFactoryInterface lineFactory, LineSegmentFactoryInterface lineSegmentFactory) {
+        this.lineFactory = lineFactory;
+        this.lineSegmentFactory = lineSegmentFactory;
         lines = new HashMap<>();
     }
 
@@ -15,10 +17,16 @@ public class Lines {
         for (LineNameType lineName : lines) {
 
             if (!this.lines.containsKey(lineName)) {
-                this.lines.put(lineName, linesFactory.createLine(lineName));
+                this.lines.put(lineName, lineFactory.createLine(lineName, lineSegmentFactory));
             }
 
             this.lines.get(lineName).updateReachable(stopName, time);
         }
+    }
+
+    public StopNameType updateCapacityAndGetPreviousStop(LineNameType lineName,
+            StopNameType stopName, TimeType time) {
+        // TODO: implementovat
+        return null;
     }
 }

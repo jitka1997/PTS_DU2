@@ -1,3 +1,4 @@
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -8,6 +9,7 @@ public class Stops {
 
     public Stops(StopFactoryInterface stopFactory) {
         this.stopFactory = stopFactory;
+        stops = new HashMap<>();
     }
 
     public void setStartingStop(StopNameType stopName, TimeType startTime) {
@@ -33,5 +35,9 @@ public class Stops {
         }
         if (earliestStop == null) return Optional.empty();
         return Optional.of(Map.entry(earliestStop.getName(), earliestTime));
+    }
+
+    public Map.Entry<TimeType, LineNameType> getReachableAt(StopNameType stopName) {
+        return stops.get(stopName).getReachableAt();
     }
 }

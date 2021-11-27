@@ -21,6 +21,7 @@ public class Stop {
     }
 
     public void updateReachableAt(TimeType reachableAt, Optional<LineNameType> lineName) {
+        // TODO: treba porovnat ci to je kratsie!!!
         this.reachableAt = Optional.of(reachableAt);
         reachableVia = lineName;
     }
