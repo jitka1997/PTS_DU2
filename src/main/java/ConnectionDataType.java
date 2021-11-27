@@ -3,14 +3,14 @@ import java.util.List;
 public class ConnectionDataType {
     private final List<LineNameType> lines;
     private final List<StopNameType> stops;
-    private final List<TimeType> departures;
+    private final List<TimeType> arrivals;
 
 
     public ConnectionDataType(List<LineNameType> lines, List<StopNameType> stops,
-            List<TimeType> departures) {
+            List<TimeType> arrivals) {
         this.lines = lines;
         this.stops = stops;
-        this.departures = departures;
+        this.arrivals = arrivals;
     }
 
     public List<LineNameType> getLines() {
@@ -22,6 +22,6 @@ public class ConnectionDataType {
     }
 
     public List<TimeType> getDepartures() {
-        return departures;
+        return arrivals;
     }
 }

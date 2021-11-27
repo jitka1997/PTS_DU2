@@ -1,7 +1,4 @@
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 public class ConnectionSearch {
     private final LineFactoryInterface lineFactory;
@@ -51,7 +48,9 @@ public class ConnectionSearch {
                     last.getKey());
 
         }
-        // TODO: nasli sme spojenie vrat spravne ConnectionData
-        return null;
+        Collections.reverse(routeArrivals);
+        Collections.reverse(routeLines);
+        Collections.reverse(routeStops);
+        return new ConnectionDataType(routeLines, routeStops, routeArrivals);
     }
 }
