@@ -6,7 +6,8 @@ public class ConnectionDataType {
     private final List<TimeType> departures;
 
 
-    public ConnectionDataType(List<LineNameType> lines, List<StopNameType> stops, List<TimeType> departures) {
+    public ConnectionDataType(List<LineNameType> lines, List<StopNameType> stops,
+            List<TimeType> departures) {
         this.lines = lines;
         this.stops = stops;
         this.departures = departures;
