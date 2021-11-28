@@ -6,6 +6,8 @@ import javax.persistence.*;
 public class FinalLineEntity {
     private String lineName;
     private String firstStop;
+    private String startingTimes;
+    private int numOfLineSegs;
 
     @Id
     public String getLineName() {
@@ -23,6 +25,24 @@ public class FinalLineEntity {
 
     public void setFirstStop(String firstStop) {
         this.firstStop = firstStop;
+    }
+
+    @Basic
+    public String getStartingTimes() {
+        return startingTimes;
+    }
+
+    @Basic
+    public int getNumOfLineSegs() {
+        return numOfLineSegs;
+    }
+
+    public void setNumOfLineSegs(int numOfLineSegs) {
+        this.numOfLineSegs = numOfLineSegs;
+    }
+
+    public void setStartingTimes(String startingTimes) {
+        this.startingTimes = startingTimes;
     }
 
     @Override
@@ -45,6 +65,6 @@ public class FinalLineEntity {
 
     @Override
     public String toString() {
-        return "FinalLineEntity{" + "lineName='" + lineName + '\'' + ", firstStop='" + firstStop + '\'' + '}';
+        return "FinalLineEntity{" + "lineName='" + lineName + '\'' + ", firstStop='" + firstStop + '\'' + ", startingTimes='" + startingTimes + '\'' + ", numOfLineSegs=" + numOfLineSegs + '}';
     }
 }
