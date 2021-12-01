@@ -87,16 +87,17 @@ public class Line {
         if (toUpdate < 0) return firstStop;
 
         // previous stop
-        Map.Entry<TimeType, StopNameType> previousStop =
-                lineSegments.get(toUpdate).nextStop(new TimeType(0));
+        Map.Entry<TimeType, StopNameType> previousStop = lineSegments.get(toUpdate).nextStop(
+                new TimeType(0));
         TimeType previousTimeDiff = previousStop.getKey();
 
         // update capacity
         TimeType starTime = null;
         for (TimeType startingTime : startingTimes) {
-            if (TimeType.minus(TimeType.plus(startingTime, duration), previousTimeDiff).compareTo(arrival) <= 0) {
-                if(starTime == null) starTime = startingTime;
-                else if(startingTime.compareTo(starTime) < 0) starTime = startingTime;
+            if (TimeType.minus(TimeType.plus(startingTime, duration), previousTimeDiff).compareTo(
+                    arrival) <= 0) {
+                if (starTime == null) starTime = startingTime;
+                else if (startingTime.compareTo(starTime) < 0) starTime = startingTime;
             }
         }
         lineSegments.get(toUpdate).incrementCapacity(starTime);

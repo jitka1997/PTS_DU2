@@ -39,7 +39,7 @@ public class TimeType implements Comparable<TimeType> {
         return newTime;
     }
 
-    public static TimeType max(TimeType time1, TimeType time2){
+    public static TimeType max(TimeType time1, TimeType time2) {
         return new TimeType(Long.max(time1.getTime(), time2.getTime()));
     }
 

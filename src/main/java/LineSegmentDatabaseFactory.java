@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class LineSegmentDatabaseFactory implements LineSegmentFactoryInterface{
+public class LineSegmentDatabaseFactory implements LineSegmentFactoryInterface {
     private final EntityManager entityManager;
 
     public LineSegmentDatabaseFactory(EntityManager entityManager) {
@@ -28,11 +28,9 @@ public class LineSegmentDatabaseFactory implements LineSegmentFactoryInterface{
             query.setParameter(1, line_name);
             query.setParameter(2, index);
 
-            @SuppressWarnings("unchecked")
-            List<FinalLineSegmentEntity> lineSegments =
-                    (List<FinalLineSegmentEntity>) query.getResultList();
+            @SuppressWarnings("unchecked") List<FinalLineSegmentEntity> lineSegments = (List<FinalLineSegmentEntity>) query.getResultList();
 
-            if(lineSegments.size() == 0) throw new IllegalArgumentException();
+            if (lineSegments.size() == 0) throw new IllegalArgumentException();
 
             TimeDiffType timeDiff = null;
             int capacity = 0;
@@ -41,7 +39,7 @@ public class LineSegmentDatabaseFactory implements LineSegmentFactoryInterface{
             Map<TimeType, Integer> numOfPass = new HashMap<>();
 
 
-            for(FinalLineSegmentEntity lineSegmentEntity : lineSegments){
+            for (FinalLineSegmentEntity lineSegmentEntity : lineSegments) {
                 timeDiff = new TimeDiffType(lineSegmentEntity.getTimeDiff());
                 capacity = lineSegmentEntity.getCapacity();
                 nextStop = new StopNameType(lineSegmentEntity.getNextStop());

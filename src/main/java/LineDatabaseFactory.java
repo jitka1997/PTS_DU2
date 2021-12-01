@@ -26,10 +26,9 @@ public class LineDatabaseFactory implements LineFactoryInterface {
             Query query = entityManager.createNamedQuery("lineByName");
             query.setParameter(1, line_name);
 
-            @SuppressWarnings("unchecked")
-            List<FinalLineEntity> lines = (List<FinalLineEntity>) query.getResultList();
+            @SuppressWarnings("unchecked") List<FinalLineEntity> lines = (List<FinalLineEntity>) query.getResultList();
 
-            if(lines.size() == 0) throw new IllegalArgumentException();
+            if (lines.size() == 0) throw new IllegalArgumentException();
 
             FinalLineEntity lineEntity = lines.get(0);
             LineNameType newLineName = new LineNameType(lineEntity.getLineName());

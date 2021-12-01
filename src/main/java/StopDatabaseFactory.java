@@ -29,7 +29,7 @@ public class StopDatabaseFactory implements StopFactoryInterface {
 
             @SuppressWarnings("unchecked") List<FinalStopEntity> stops = (List<FinalStopEntity>) query.getResultList();
 
-            if(stops.size() == 0) throw new IllegalArgumentException();
+            if (stops.size() == 0) throw new IllegalArgumentException();
 
             FinalStopEntity stopEntity = stops.get(0);
             StopNameType newStopName = new StopNameType(stopEntity.getName());
