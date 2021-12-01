@@ -1,10 +1,8 @@
-import entity.FinalLineEntity;
 import entity.FinalLineSegmentEntity;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,7 +17,7 @@ public class LineSegmentDatabaseFactory implements LineSegmentFactoryInterface{
     @Override
     public LineSegment createLineSegment(LineNameType lineName, int i) {
         EntityTransaction transaction = entityManager.getTransaction();
-        LineSegment newLineSegment = null;
+        LineSegment newLineSegment;
 
         try {
             transaction.begin();

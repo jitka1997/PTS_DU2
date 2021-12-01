@@ -1,4 +1,5 @@
 import java.util.List;
+import java.util.Objects;
 
 public class ConnectionDataType {
     private final List<LineNameType> lines;
@@ -21,7 +22,26 @@ public class ConnectionDataType {
         return stops;
     }
 
-    public List<TimeType> getDepartures() {
+    public List<TimeType> getArrivals() {
         return arrivals;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ConnectionDataType that = (ConnectionDataType) o;
+        return getLines().equals(that.getLines()) && getStops().equals(
+                that.getStops()) && arrivals.equals(that.arrivals);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getLines(), getStops(), getArrivals());
+    }
+
+    @Override
+    public String toString() {
+        return "ConnectionDataType{" + "lines=" + lines + ", stops=" + stops + ", arrivals=" + arrivals + '}';
     }
 }

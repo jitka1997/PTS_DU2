@@ -19,6 +19,8 @@ public class ConnectionSearch {
         stops = Stops.getInstance();
         lines = new Lines(lineFactory, lineSegmentFactory);
         stops.setStartingStop(from, startTime);
+        List<LineNameType> linesToProcessAfterFrom = stops.getLines(from);
+        lines.updateReachable(linesToProcessAfterFrom, from, startTime);
         StopNameType nextStop;
         TimeType nextTime = startTime;
         while (true) {
@@ -28,6 +30,7 @@ public class ConnectionSearch {
                 throw new IllegalArgumentException("Connection doesn't exist");
             nextStop = earliest.get().getKey();
             nextTime = earliest.get().getValue();
+            System.out.println("CONNECTION SEARCH NEXT STOP " + nextStop);
 
             if (nextStop.equals(to)) break;
             List<LineNameType> linesToProcess = stops.getLines(nextStop);
@@ -40,7 +43,9 @@ public class ConnectionSearch {
         List<LineNameType> routeLines = new ArrayList<>();
         List<TimeType> routeArrivals = new ArrayList<>();
         while (true) {
+            System.out.println("CONNECTION SEARCH HLADAM CESTU");
             Map.Entry<TimeType, LineNameType> last = stops.getReachableAt(lastStop);
+            System.out.println("CON SER " + last.getKey() + " " + last.getKey());
             routeStops.add(lastStop);
             routeLines.add(last.getValue());
             routeArrivals.add(last.getKey());

@@ -1,3 +1,5 @@
+import java.util.Objects;
+
 public class TimeType implements Comparable<TimeType> {
     private long time;
 
@@ -22,7 +24,7 @@ public class TimeType implements Comparable<TimeType> {
     }
 
     public void subtract(TimeType time) {
-        setTime(time.getTime() - this.time);
+        setTime(this.time - time.getTime());
     }
 
     public static TimeType plus(TimeType time1, TimeType time2) {
@@ -37,8 +39,30 @@ public class TimeType implements Comparable<TimeType> {
         return newTime;
     }
 
+    public static TimeType max(TimeType time1, TimeType time2){
+        return new TimeType(Long.max(time1.getTime(), time2.getTime()));
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        TimeType timeType = (TimeType) o;
+        return getTime() == timeType.getTime();
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getTime());
+    }
+
     @Override
     public int compareTo(TimeType time) {
         return (int) minus(this, time).getTime();
+    }
+
+    @Override
+    public String toString() {
+        return Long.toString(time);
     }
 }

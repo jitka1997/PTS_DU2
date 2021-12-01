@@ -1,5 +1,6 @@
 import org.javatuples.Triplet;
 
+import javax.xml.bind.SchemaOutputResolver;
 import java.util.Map;
 import java.util.Optional;
 
@@ -25,11 +26,16 @@ public class LineSegment {
 
     public Triplet<TimeType, StopNameType, Boolean> nextStopAndUpdateReachable(TimeType departure,
             TimeType startTime) {
-        boolean busIsFull = numberOfPassengers.get(startTime) < capacity;
+        System.out.println("V LINE SEGU UPDAJTUJEM " + nextStop + " " + TimeType.plus(departure, timeToNextStop));
+
+        System.out.println("V LINE SEGU " + numberOfPassengers + " " + startTime);
+        boolean busIsFull = numberOfPassengers.get(startTime) >= capacity;
         TimeType arrival = TimeType.plus(departure, timeToNextStop);
+
         if (!busIsFull) {
             try {
                 TimeType currentReachableTime = nextStop.getReachableAtTime();
+                System.out.println("LINE SEG terajsi a novy cas " + currentReachableTime + " " + arrival);
                 if (currentReachableTime.compareTo(arrival) > 0) {
                     nextStop.updateReachableAt(arrival, Optional.of(lineName));
                 }
@@ -45,7 +51,8 @@ public class LineSegment {
         numberOfPassengers.put(time, numberOfPassengers.get(time) + 1);
     }
 
-    public StopNameType getNextStopName() {
-        return nextStop.getName();
+    @Override
+    public String toString() {
+        return "LineSegment{" + "timeToNextStop=" + timeToNextStop + ", numberOfPassengers=" + numberOfPassengers + ", capacity=" + capacity + ", lineName=" + lineName + ", nextStop=" + nextStop + '}';
     }
 }

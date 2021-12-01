@@ -1,7 +1,4 @@
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 public class Stops {
     private final Map<StopNameType, Stop> stops = new HashMap<>();
@@ -23,18 +20,23 @@ public class Stops {
     public void setStartingStop(StopNameType stopName, TimeType startTime) {
         Stop startingStop = stopFactory.createStop(stopName);
         stops.put(stopName, startingStop);
-        startingStop.updateReachableAt(TimeType.plus(startTime, new TimeType(1)), Optional.empty());
+        startingStop.updateReachableAt(startTime, Optional.empty());
     }
 
     public List<LineNameType> getLines(StopNameType stopName) {
         return stops.get(stopName).getLines();
     }
 
+    //TODO: toto musi vracat pole lebo mozu byt viacere zastavky s rovnakym najblizsim vacsim
+    // casom !!!
     public Optional<Map.Entry<StopNameType, TimeType>> earliestReachableAfter(TimeType time) {
         Stop earliestStop = null;
         TimeType earliestTime = null;
         for (Stop stop : stops.values()) {
+            System.out.println(stops);
+            System.out.println(stop.getName());
             TimeType tmpTime = stop.getReachableAt().getKey();
+            System.out.println(tmpTime.compareTo(time) + " " + tmpTime + " " + time);
             if (tmpTime.compareTo(time) > 0 && (earliestStop == null || tmpTime.compareTo(
                     earliestTime) <= 0)) {
                 earliestStop = stop;
@@ -50,6 +52,7 @@ public class Stops {
     }
 
     public Stop makeStop(StopNameType stopName) {
+        System.out.println("SOM V MAKE STOP " + stopName);
         stops.put(stopName, stopFactory.createStop(stopName));
         return stops.get(stopName);
     }
