@@ -18,8 +18,7 @@ public class Stop {
     public Map.Entry<TimeType, LineNameType> getReachableAt() {
         if (!reachableAt.isPresent()) throw new IllegalArgumentException();
         // it's starting stop
-        if (!reachableVia.isPresent())
-            return Map.entry(reachableAt.get(), new LineNameType("START"));
+        if (!reachableVia.isPresent()) return Map.entry(reachableAt.get(), new LineNameType("START"));
         return Map.entry(reachableAt.get(), reachableVia.get());
     }
 
@@ -39,5 +38,10 @@ public class Stop {
 
     public StopNameType getName() {
         return name;
+    }
+
+    @Override
+    public String toString() {
+        return "{at " + reachableAt.get() + ", via " + ((reachableVia.isPresent()) ? reachableVia.get() : -1) + " " + getLines() + '}';
     }
 }

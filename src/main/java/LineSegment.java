@@ -11,8 +11,8 @@ public class LineSegment {
     private final LineNameType lineName;
     private final StopInterface nextStop;
 
-    public LineSegment(TimeDiffType timeToNextStop, Map<TimeType, Integer> numberOfPassengers,
-            int capacity, LineNameType lineName, StopNameType nextStop) {
+    public LineSegment(TimeDiffType timeToNextStop, Map<TimeType, Integer> numberOfPassengers, int capacity,
+            LineNameType lineName, StopNameType nextStop) {
         this.timeToNextStop = timeToNextStop;
         this.numberOfPassengers = numberOfPassengers;
         this.capacity = capacity;

@@ -10,11 +10,12 @@ import javax.persistence.Persistence;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import static org.junit.Assert.*;
 
 
-public class IntegrationTest {
+public class IntegrationTestDatabase {
     ConnectionSearch connectionSearch;
 
 
@@ -51,6 +52,33 @@ public class IntegrationTest {
         StopNameType to = new StopNameType("stop6");
         TimeType startTime = new TimeType(1);
         ConnectionDataType searched = connectionSearch.search(from, to, startTime);
+        ConnectionDataType expected = new ConnectionDataType(
+                new ArrayList<>(Arrays.asList(
+                        new LineNameType("START"),
+                        new LineNameType("line1"),
+                        new LineNameType("line1"),
+                        new LineNameType("line1"),
+                        new LineNameType("line1"),
+                        new LineNameType("line1")
+                )),
+                new ArrayList<>(Arrays.asList(
+                        new StopNameType("stop1"),
+                        new StopNameType("stop2"),
+                        new StopNameType("stop3"),
+                        new StopNameType("stop4"),
+                        new StopNameType("stop5"),
+                        new StopNameType("stop6")
+                )),
+                new ArrayList<>(Arrays.asList(
+                        new TimeType(1),
+                        new TimeType(3),
+                        new TimeType(6),
+                        new TimeType(8),
+                        new TimeType(9),
+                        new TimeType(11)
+                ))
+        );
+        assertEquals(expected, searched);
     }
 
     //TODO: nie na konecnej zacinajuci test

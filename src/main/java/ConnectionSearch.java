@@ -7,8 +7,8 @@ public class ConnectionSearch {
     private Stops stops;
     private Lines lines;
 
-    public ConnectionSearch(LineFactoryInterface lineFactory,
-            LineSegmentFactoryInterface lineSegmentFactory, StopFactoryInterface stopFactory) {
+    public ConnectionSearch(LineFactoryInterface lineFactory, LineSegmentFactoryInterface lineSegmentFactory,
+            StopFactoryInterface stopFactory) {
         this.lineFactory = lineFactory;
         this.lineSegmentFactory = lineSegmentFactory;
         this.stopFactory = stopFactory;
@@ -24,10 +24,9 @@ public class ConnectionSearch {
         StopNameType nextStop;
         TimeType nextTime = startTime;
         while (true) {
-            Optional<Map.Entry<StopNameType, TimeType>> earliest = stops.earliestReachableAfter(
-                    nextTime);
-            if (!earliest.isPresent())
-                throw new IllegalArgumentException("Connection doesn't exist");
+            Optional<Map.Entry<StopNameType, TimeType>> earliest = stops.earliestReachableAfter(nextTime);
+
+            if (!earliest.isPresent()) throw new IllegalArgumentException("Connection doesn't exist");
             nextStop = earliest.get().getKey();
             nextTime = earliest.get().getValue();
 
@@ -36,19 +35,19 @@ public class ConnectionSearch {
             lines.updateReachable(linesToProcess, nextStop, nextTime);
         }
 
+
         // reconstruct route
         StopNameType lastStop = nextStop;
         List<StopNameType> routeStops = new ArrayList<>();
         List<LineNameType> routeLines = new ArrayList<>();
         List<TimeType> routeArrivals = new ArrayList<>();
         while (true) {
-            Map.Entry<TimeType, LineNameType> last = stops.getReachableAt(lastStop);
+            Map.Entry<TimeType, LineNameType> last = stops.getReachableAtProcessed(lastStop);
             routeStops.add(lastStop);
             routeLines.add(last.getValue());
             routeArrivals.add(last.getKey());
             if (lastStop.equals(from)) break;
-            lastStop = lines.updateCapacityAndGetPreviousStop(last.getValue(), lastStop,
-                    last.getKey());
+            lastStop = lines.updateCapacityAndGetPreviousStop(last.getValue(), lastStop, last.getKey());
 
         }
         Collections.reverse(routeArrivals);

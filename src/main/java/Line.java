@@ -29,10 +29,10 @@ public class Line {
     }
 
     private Map.Entry<TimeType, Integer> durationFromFirstStop(StopNameType to, int previous) {
-        int toUpdate = 0;
+        int toUpdate = -1;
         StopNameType previousNextStop = firstStop;
         TimeType duration = new TimeDiffType(0);
-        if (previousNextStop.equals(to)) return Map.entry(duration, toUpdate);
+        if (previousNextStop.equals(to)) return Map.entry(duration, 0);
         for (int i = 0; i < numberOfLineSegments; i++) {
             LineSegment lineSegment = getOrLoad(i);
             if (previousNextStop.equals(to)) {
@@ -43,6 +43,9 @@ public class Line {
             duration = pair.getKey();
             previousNextStop = pair.getValue();
         }
+        if (toUpdate == -1 && previousNextStop.equals(to)) {
+            toUpdate = numberOfLineSegments - previous;
+        }
         return Map.entry(duration, toUpdate);
     }
 
@@ -52,6 +55,7 @@ public class Line {
         int toUpdate = pair.getValue();
         TimeType duration = pair.getKey();
 
+
         // if stopName is last stop do nothing
         if (toUpdate == numberOfLineSegments) return;
 
@@ -60,7 +64,7 @@ public class Line {
         Map.Entry<TimeType, TimeType> bestBus = null;
         for (int i = 0; i < startingTimes.size(); i++) {
             TimeType tmp = TimeType.plus(startingTimes.get(i), duration);
-            if (tmp.compareTo(time) <= 0) {
+            if (tmp.compareTo(time) >= 0) {
                 if (bestBus == null) bestBus = Map.entry(tmp, startingTimes.get(i));
                 else if (startingTimes.get(i).compareTo(bestBus.getValue()) <= 0)
                     bestBus = Map.entry(tmp, startingTimes.get(i));
@@ -73,23 +77,18 @@ public class Line {
 
         // update stopName's reachableAt
         LineSegment lineSegment = getOrLoad(toUpdate);
-        lineSegment.nextStopAndUpdateReachable(TimeType.max(bestBus.getKey(), time),
-                bestBus.getValue());
+        lineSegment.nextStopAndUpdateReachable(bestBus.getKey(), bestBus.getValue());
     }
 
     public StopNameType updateCapacityAndGetPreviousStop(StopNameType stopName, TimeType arrival) {
         Map.Entry<TimeType, Integer> pair = durationFromFirstStop(stopName, 1);
-        int toUpdate = pair.getValue() - 1;
+        int toUpdate = pair.getValue();
         TimeType duration = pair.getKey();
 
-
-        // there was no journey before this stop
-        if (toUpdate < 0) return firstStop;
-
-        // previous stop
-        Map.Entry<TimeType, StopNameType> previousStop = lineSegments.get(toUpdate).nextStop(
+        // segment to update
+        Map.Entry<TimeType, StopNameType> segmentToUpdate = lineSegments.get(toUpdate).nextStop(
                 new TimeType(0));
-        TimeType previousTimeDiff = previousStop.getKey();
+        TimeType previousTimeDiff = segmentToUpdate.getKey();
 
         // update capacity
         TimeType starTime = null;
@@ -103,7 +102,10 @@ public class Line {
         lineSegments.get(toUpdate).incrementCapacity(starTime);
 
         // previous stop
-        return previousStop.getValue();
+        StopNameType previousStop;
+        if (toUpdate == 0) previousStop = firstStop;
+        else previousStop = lineSegments.get(toUpdate - 1).nextStop(new TimeType(0)).getValue();
+        return previousStop;
     }
 
     public LineNameType getName() {
