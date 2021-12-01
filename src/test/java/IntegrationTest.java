@@ -51,7 +51,6 @@ public class IntegrationTest {
         StopNameType to = new StopNameType("stop6");
         TimeType startTime = new TimeType(1);
         ConnectionDataType searched = connectionSearch.search(from, to, startTime);
-        System.out.println(searched);
     }
 
     //TODO: nie na konecnej zacinajuci test

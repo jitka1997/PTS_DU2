@@ -47,19 +47,14 @@ public class Line {
     }
 
     public void updateReachable(StopNameType stopName, TimeType time) {
-        System.out.println("updatni toto " + stopName + " " + time);
         //find duration from firstStop to stopName
         Map.Entry<TimeType, Integer> pair = durationFromFirstStop(stopName, 0);
         int toUpdate = pair.getValue();
         TimeType duration = pair.getKey();
 
-        System.out.println(
-                "NASIEL SOM DURATION " + toUpdate + " " + duration + " " + numberOfLineSegments);
-
         // if stopName is last stop do nothing
         if (toUpdate == numberOfLineSegments) return;
 
-        System.out.println("SOM ESTE AJ tu");
 
         // find first possible bus that arrives at stopName before (or at the same time as) time
         Map.Entry<TimeType, TimeType> bestBus = null;
@@ -75,13 +70,9 @@ public class Line {
         // if such bus doesn't exist don't do anything
         if (bestBus == null) return;
 
-        System.out.println("DOKONCA AJ TU");
 
         // update stopName's reachableAt
         LineSegment lineSegment = getOrLoad(toUpdate);
-        System.out.println(
-                "bestBus " + TimeType.max(bestBus.getKey(), time) + " " + bestBus.getValue());
-        System.out.println("lineSegment to update " + lineSegment);
         lineSegment.nextStopAndUpdateReachable(TimeType.max(bestBus.getKey(), time),
                 bestBus.getValue());
     }
@@ -91,8 +82,6 @@ public class Line {
         int toUpdate = pair.getValue() - 1;
         TimeType duration = pair.getKey();
 
-        System.out.println(
-                "LINE UPDATE AND NEXT STOP " + toUpdate + " " + duration + " " + stopName);
 
         // there was no journey before this stop
         if (toUpdate < 0) return firstStop;

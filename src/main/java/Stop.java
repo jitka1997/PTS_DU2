@@ -16,11 +16,9 @@ public class Stop {
     }
 
     public Map.Entry<TimeType, LineNameType> getReachableAt() {
-        System.out.println(reachableAt.isPresent() + " " + reachableVia.isPresent());
         if (!reachableAt.isPresent())
             throw new IllegalArgumentException();
         // it's starting stop
-        System.out.println("REACHABLE AT V STOPE " + name + " " + reachableAt.get());
         if(!reachableVia.isPresent()) return  Map.entry(reachableAt.get(), new LineNameType(
                 "START"));
         return Map.entry(reachableAt.get(), reachableVia.get());

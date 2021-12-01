@@ -26,16 +26,13 @@ public class LineSegment {
 
     public Triplet<TimeType, StopNameType, Boolean> nextStopAndUpdateReachable(TimeType departure,
             TimeType startTime) {
-        System.out.println("V LINE SEGU UPDAJTUJEM " + nextStop + " " + TimeType.plus(departure, timeToNextStop));
 
-        System.out.println("V LINE SEGU " + numberOfPassengers + " " + startTime);
         boolean busIsFull = numberOfPassengers.get(startTime) >= capacity;
         TimeType arrival = TimeType.plus(departure, timeToNextStop);
 
         if (!busIsFull) {
             try {
                 TimeType currentReachableTime = nextStop.getReachableAtTime();
-                System.out.println("LINE SEG terajsi a novy cas " + currentReachableTime + " " + arrival);
                 if (currentReachableTime.compareTo(arrival) > 0) {
                     nextStop.updateReachableAt(arrival, Optional.of(lineName));
                 }

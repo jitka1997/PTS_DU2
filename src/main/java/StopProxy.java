@@ -17,7 +17,6 @@ public class StopProxy implements StopInterface {
     }
 
     public TimeType getReachableAtTime() {
-        System.out.println("SOM V STOP PROXY " + name);
         if (stop == null) stop = Stops.getInstance().makeStop(name);
         return stop.getReachableAtTime();
     }

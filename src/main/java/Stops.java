@@ -33,10 +33,7 @@ public class Stops {
         Stop earliestStop = null;
         TimeType earliestTime = null;
         for (Stop stop : stops.values()) {
-            System.out.println(stops);
-            System.out.println(stop.getName());
             TimeType tmpTime = stop.getReachableAt().getKey();
-            System.out.println(tmpTime.compareTo(time) + " " + tmpTime + " " + time);
             if (tmpTime.compareTo(time) > 0 && (earliestStop == null || tmpTime.compareTo(
                     earliestTime) <= 0)) {
                 earliestStop = stop;
@@ -52,7 +49,6 @@ public class Stops {
     }
 
     public Stop makeStop(StopNameType stopName) {
-        System.out.println("SOM V MAKE STOP " + stopName);
         stops.put(stopName, stopFactory.createStop(stopName));
         return stops.get(stopName);
     }
