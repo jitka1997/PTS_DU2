@@ -1,10 +1,10 @@
 import java.util.*;
 
 public class Stops {
-    private final Map<StopNameType, Stop> stops = new HashMap<>();
+    private Map<StopNameType, Stop> stops = new HashMap<>();
     private static StopFactoryInterface stopFactory = null;
     private static Stops instance = null;
-    private final Map<StopNameType, Stop> processedStops = new HashMap<>();
+    private Map<StopNameType, Stop> processedStops = new HashMap<>();
 
     private Stops() {
     }
@@ -28,8 +28,6 @@ public class Stops {
         return processedStops.get(stopName).getLines();
     }
 
-    //TODO: toto musi vracat pole lebo mozu byt viacere zastavky s rovnakym najblizsim vacsim
-    // casom !!!
     public Optional<Map.Entry<StopNameType, TimeType>> earliestReachableAfter(TimeType time) {
         Stop earliestStop = null;
         TimeType earliestTime = null;
@@ -56,9 +54,14 @@ public class Stops {
     }
 
     public Stop makeStop(StopNameType stopName) {
-        if(stops.containsKey(stopName)) return stops.get(stopName);
+        if (stops.containsKey(stopName)) return stops.get(stopName);
         stops.put(stopName, stopFactory.createStop(stopName));
         return stops.get(stopName);
+    }
+
+    public void clean() {
+        stops = new HashMap<>();
+        processedStops = new HashMap<>();
     }
 
     @Override

@@ -12,7 +12,6 @@ public class IntegrationTestMemory {
     ConnectionSearch connectionSearch;
 
 
-    // TODO: nezabudni zavriet entity managera
     @Before
     public void setUp() {
         List<Pair<LineNameType, StopNameType>> lines = new ArrayList<>() {{
@@ -71,8 +70,5 @@ public class IntegrationTestMemory {
         );
         assertEquals(expected, searched);
     }
-
-    //TODO: nie na konecnej zacinajuci test
-
 
 }

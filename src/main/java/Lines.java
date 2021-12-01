@@ -3,7 +3,7 @@ import java.util.List;
 import java.util.Map;
 
 public class Lines {
-    private final Map<LineNameType, Line> lines;
+    private Map<LineNameType, Line> lines;
     private final LineFactoryInterface lineFactory;
     private final LineSegmentFactoryInterface lineSegmentFactory;
 
@@ -24,8 +24,12 @@ public class Lines {
         }
     }
 
-    public StopNameType updateCapacityAndGetPreviousStop(LineNameType lineName,
-            StopNameType stopName, TimeType time) {
+    public StopNameType updateCapacityAndGetPreviousStop(LineNameType lineName, StopNameType stopName,
+            TimeType time) {
         return lines.get(lineName).updateCapacityAndGetPreviousStop(stopName, time);
+    }
+
+    public void clean() {
+        lines = new HashMap<>();
     }
 }

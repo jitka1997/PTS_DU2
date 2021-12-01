@@ -17,19 +17,24 @@ import static org.junit.Assert.*;
 
 public class IntegrationTestDatabase {
     ConnectionSearch connectionSearch;
+    EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory(
+            "default");
+    EntityManager entityManager = entityManagerFactory.createEntityManager();
 
 
-    // TODO: nezabudni zavriet entity managera
     @Before
     public void setUp() {
-        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory(
-                "default");
-        EntityManager entityManager = entityManagerFactory.createEntityManager();
         LineSegmentFactoryInterface lineSegmentFactory = new LineSegmentDatabaseFactory(
                 entityManager);
         LineFactoryInterface lineFactory = new LineDatabaseFactory(entityManager);
         StopFactoryInterface stopFactory = new StopDatabaseFactory(entityManager);
         connectionSearch = new ConnectionSearch(lineFactory, lineSegmentFactory, stopFactory);
+    }
+
+    @After
+    public void RunAfter(){
+        entityManager.close();
+        entityManagerFactory.close();
     }
 
     @Test
@@ -80,8 +85,5 @@ public class IntegrationTestDatabase {
         );
         assertEquals(expected, searched);
     }
-
-    //TODO: nie na konecnej zacinajuci test
-
 
 }
