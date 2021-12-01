@@ -2,6 +2,13 @@ package entity;
 
 import javax.persistence.*;
 
+@NamedNativeQuery(name = "lineByName", query =
+        "select l.line_name AS lineName, l" + ".first_stop AS firstStop, " +
+                "array_to_string(array_agg(lst" + ".starting_time), ',') AS " +
+                "startingTimes, l.num_of_line_segs AS numOfLineSegs from line l, " +
+                "lines_starting_times lst where l.line_name = lst.line_name and l" +
+                ".line_name =? group by" + " l.line_name, l" +
+                ".first_stop order by l.line_name", resultClass = FinalLineEntity.class)
 @Entity
 public class FinalLineEntity {
     private String lineName;

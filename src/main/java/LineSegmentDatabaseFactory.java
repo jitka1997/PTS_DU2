@@ -24,18 +24,9 @@ public class LineSegmentDatabaseFactory implements LineSegmentFactoryInterface{
 
             String line_name = lineName.toString();
             int index = i;
-            Query query = entityManager.createNativeQuery("select ls.line_name AS lineName, ls" +
-                            ".place, " +
-                            "ls.time_diff AS timeDiff, ls.capacity, ls.next_stop AS nextStop, " +
-                            "lsnp.num_of_pass AS numOfPass, starting_time AS startingTime from " +
-                            "line_segment ls, line_segs_num_of_pass lsnp where lsnp.place = ls" +
-                            ".place and ls.line_name = lsnp.line_name and ls.line_name = '" + line_name + "' and ls.place = '" + index +
-                            "' order by " +
-                            "ls" +
-                            ".line_name, " +
-                            "ls" +
-                            ".place",
-                    FinalLineSegmentEntity.class);
+            Query query = entityManager.createNamedQuery("lineSegmentByLinenNameAnId");
+            query.setParameter(1, line_name);
+            query.setParameter(2, index);
 
             @SuppressWarnings("unchecked")
             List<FinalLineSegmentEntity> lineSegments =

@@ -1,10 +1,12 @@
 package entity;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 
+@NamedNativeQuery(name = "stopByName", query = "select array_to_string(array_agg" +
+                "(distinct ls.line_name), ',') AS lineNames, s.name  from stop s, " +
+                "line_segment ls, line l where (ls.next_stop = s.name or l" +
+                ".first_stop = s.name) and ls.line_name = l.line_name and s.name = ? group by s" +
+                ".name order by s.name", resultClass = FinalStopEntity.class)
 @Entity
 public class FinalStopEntity {
     private String name;

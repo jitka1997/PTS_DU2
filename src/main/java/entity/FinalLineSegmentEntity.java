@@ -3,6 +3,12 @@ package entity;
 import javax.persistence.*;
 import java.util.Objects;
 
+@NamedNativeQuery(name = "lineSegmentByLinenNameAnId", query = "select ls.line_name AS lineName, ls.place, " +
+        "ls.time_diff AS timeDiff, ls.capacity, ls.next_stop AS nextStop, " +
+        "lsnp.num_of_pass AS numOfPass, starting_time AS startingTime from " +
+        "line_segment ls, line_segs_num_of_pass lsnp where lsnp.place = ls" +
+        ".place and ls.line_name = lsnp.line_name and ls.line_name = ? and ls.place = ? order by " +
+        "ls.line_name, ls.place", resultClass = FinalLineSegmentEntity.class)
 @Entity
 @IdClass(FinalLineSegmentEntityPK.class)
 public class FinalLineSegmentEntity {

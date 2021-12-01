@@ -24,13 +24,8 @@ public class StopDatabaseFactory implements StopFactoryInterface {
             transaction.begin();
 
             String stop_name = stopName.toString();
-            Query query = entityManager.createNativeQuery("select array_to_string(array_agg" +
-                            "(distinct ls.line_name), ',') AS lineNames, s.name  from stop s, " +
-                            "line_segment ls, line l where (ls.next_stop = s.name or l" +
-                            ".first_stop = s.name) and ls.line_name = l.line_name and s.name = '" + stop_name +
-                            "' group by s" +
-                            ".name order by s.name",
-                    FinalStopEntity.class);
+            Query query = entityManager.createNamedQuery("stopByName");
+            query.setParameter(1, stop_name);
 
             @SuppressWarnings("unchecked") List<FinalStopEntity> stops = (List<FinalStopEntity>) query.getResultList();
 
