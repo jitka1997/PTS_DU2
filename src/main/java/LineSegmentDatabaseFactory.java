@@ -15,9 +15,9 @@ public class LineSegmentDatabaseFactory implements LineSegmentFactoryInterface {
     }
 
     @Override
-    public LineSegment createLineSegment(LineNameType lineName, int i) {
+    public LineSegmentInterface createLineSegment(LineNameType lineName, int i) {
         EntityTransaction transaction = entityManager.getTransaction();
-        LineSegment newLineSegment;
+        LineSegmentInterface newLineSegment;
 
         try {
             transaction.begin();

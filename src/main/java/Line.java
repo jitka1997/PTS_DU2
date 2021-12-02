@@ -8,7 +8,7 @@ public class Line {
     private final LineNameType name;
     private final List<TimeType> startingTimes;
     private final StopNameType firstStop;
-    private final List<LineSegment> lineSegments;
+    private final List<LineSegmentInterface> lineSegments;
     private final int numberOfLineSegments;
     private final LineSegmentFactoryInterface lineSegmentFactory;
 
@@ -22,7 +22,7 @@ public class Line {
         this.lineSegments = new ArrayList<>();
     }
 
-    private LineSegment getOrLoad(int i) {
+    private LineSegmentInterface getOrLoad(int i) {
         if (i < lineSegments.size()) return lineSegments.get(i);
         lineSegments.add(lineSegmentFactory.createLineSegment(name, i));
         return lineSegments.get(i);
@@ -34,7 +34,7 @@ public class Line {
         TimeType duration = new TimeDiffType(0);
         if (previousNextStop.equals(to)) return Map.entry(duration, 0);
         for (int i = 0; i < numberOfLineSegments; i++) {
-            LineSegment lineSegment = getOrLoad(i);
+            LineSegmentInterface lineSegment = getOrLoad(i);
             if (previousNextStop.equals(to)) {
                 toUpdate = i - previous;
                 break;
@@ -76,7 +76,7 @@ public class Line {
 
 
         // update stopName's reachableAt
-        LineSegment lineSegment = getOrLoad(toUpdate);
+        LineSegmentInterface lineSegment = getOrLoad(toUpdate);
         lineSegment.nextStopAndUpdateReachable(bestBus.getKey(), bestBus.getValue());
     }
 

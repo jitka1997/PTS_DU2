@@ -4,7 +4,7 @@ import javax.xml.bind.SchemaOutputResolver;
 import java.util.Map;
 import java.util.Optional;
 
-public class LineSegment {
+public class LineSegment implements LineSegmentInterface{
     private final TimeDiffType timeToNextStop;
     private final Map<TimeType, Integer> numberOfPassengers;
     private final int capacity;

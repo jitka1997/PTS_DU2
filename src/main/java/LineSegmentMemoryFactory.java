@@ -15,7 +15,7 @@ public class LineSegmentMemoryFactory implements LineSegmentFactoryInterface{
     }
 
     @Override
-    public LineSegment createLineSegment(LineNameType lineName, int i) {
+    public LineSegmentInterface createLineSegment(LineNameType lineName, int i) {
         if(!lineSegments.containsKey(new Pair<>(lineName, i)))
             throw new IllegalArgumentException("No such line segment");
         Quartet<TimeDiffType, Map<TimeType, Integer>, Integer, StopNameType> lineSegment =

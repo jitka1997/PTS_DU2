@@ -86,4 +86,33 @@ public class IntegrationTestDatabase {
         assertEquals(expected, searched);
     }
 
+    @Test
+    public void testTransferLinesRoute(){
+        StopNameType from = new StopNameType("stop1");
+        StopNameType to = new StopNameType("stop8");
+        TimeType startTime = new TimeType(1);
+        ConnectionDataType expected = new ConnectionDataType(
+                new ArrayList<>(Arrays.asList(
+                        new LineNameType("START"),
+                        new LineNameType("line1"),
+                        new LineNameType("line3"),
+                        new LineNameType("line3")
+                )),
+                new ArrayList<>(Arrays.asList(
+                        new StopNameType("stop1"),
+                        new StopNameType("stop2"),
+                        new StopNameType("stop5"),
+                        new StopNameType("stop8")
+                )),
+                new ArrayList<>(Arrays.asList(
+                        new TimeType(1),
+                        new TimeType(3),
+                        new TimeType(4),
+                        new TimeType(6)
+                ))
+        );
+        ConnectionDataType searched = connectionSearch.search(from, to, startTime);
+        assertEquals(expected, searched);
+    }
+
 }
