@@ -11,7 +11,8 @@ CREATE TABLE stop(
 
 CREATE TABLE line(
     line_name VARCHAR(50) PRIMARY KEY,
-    first_stop VARCHAR(50) NOT NULL REFERENCES stop ON DELETE CASCADE ON UPDATE CASCADE DEFERRABLE
+    first_stop VARCHAR(50) NOT NULL REFERENCES stop ON DELETE CASCADE ON UPDATE CASCADE DEFERRABLE,
+    num_of_line_segs integer NOT NULL
 );
 
 CREATE TABLE line_segment(
@@ -51,9 +52,9 @@ insert into stop values ('stop9');
 insert into stop values ('stop10');
 
 
-insert into line values ('line1', 'stop1');
-insert into line values ('line2', 'stop2');
-insert into line values ('line3', 'stop3');
+insert into line values ('line1', 'stop1', 5);
+insert into line values ('line2', 'stop2', 4);
+insert into line values ('line3', 'stop3', 4);
 
 
 insert into lines_starting_times values ('line1', 1);
