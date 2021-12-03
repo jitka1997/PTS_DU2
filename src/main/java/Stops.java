@@ -5,6 +5,7 @@ public class Stops {
     private static StopFactoryInterface stopFactory = null;
     private static Stops instance = null;
     private Map<StopNameType, Stop> processedStops = new HashMap<>();
+    private static boolean wasInitialised = false;
 
     private Stops() {
     }
@@ -14,6 +15,8 @@ public class Stops {
     }
 
     public static void initialize(StopFactoryInterface stopFactory) {
+        if(wasInitialised) return;
+        wasInitialised = true;
         Stops.stopFactory = stopFactory;
         instance = new Stops();
     }

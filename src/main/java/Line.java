@@ -77,7 +77,15 @@ public class Line {
 
         // update stopName's reachableAt
         LineSegmentInterface lineSegment = getOrLoad(toUpdate);
-        lineSegment.nextStopAndUpdateReachable(bestBus.getKey(), bestBus.getValue());
+        TimeType departure = bestBus.getKey();
+        TimeType startTime = bestBus.getValue();
+        int indexOfStartTime = startingTimes.indexOf(startTime);
+        while(indexOfStartTime < startingTimes.size()){
+            startTime = startingTimes.get(indexOfStartTime);
+            departure = TimeType.plus(duration, startTime);
+            if(lineSegment.nextStopAndUpdateReachable(departure, startTime).getValue2()) break;
+            indexOfStartTime++;
+        }
     }
 
     public StopNameType updateCapacityAndGetPreviousStop(StopNameType stopName, TimeType arrival) {
@@ -99,7 +107,15 @@ public class Line {
                 else if (startingTime.compareTo(starTime) < 0) starTime = startingTime;
             }
         }
-        lineSegments.get(toUpdate).incrementCapacity(starTime);
+        int indexOfStartTime = startingTimes.indexOf(starTime);
+        while (indexOfStartTime < startingTimes.size()){
+            starTime = startingTimes.get(indexOfStartTime);
+            if(lineSegments.get(toUpdate).incrementCapacity(starTime)){
+                lineSegmentFactory.updateNumOfPass(name, lineSegments.get(toUpdate).nextStop(starTime).getValue(), starTime);
+                break;
+            }
+            indexOfStartTime++;
+        }
 
         // previous stop
         StopNameType previousStop;

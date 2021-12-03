@@ -16,4 +16,9 @@ public class FakeLineSegmentFactory implements LineSegmentFactoryInterface{
         next %= stops.size();
         return new FakeLineSegment(nextStop);
     }
+
+    @Override
+    public void updateNumOfPass(LineNameType lineName, StopNameType nextStop, TimeType startTime) {
+
+    }
 }

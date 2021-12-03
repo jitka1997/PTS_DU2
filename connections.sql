@@ -83,28 +83,28 @@ insert into line_segment values (2, 2, 5, 'line3', 'stop8');
 insert into line_segment values (3, 3, 5, 'line3', 'stop9');
 
 
-insert into line_segs_num_of_pass values (default, 0, 1, 1, 'line1');
-insert into line_segs_num_of_pass values (default, 1, 1, 1, 'line1');
-insert into line_segs_num_of_pass values (default, 2, 1, 1, 'line1');
-insert into line_segs_num_of_pass values (default, 3, 1, 1, 'line1');
-insert into line_segs_num_of_pass values (default, 4, 1, 1, 'line1');
+insert into line_segs_num_of_pass values (default, 0, 0, 1, 'line1');
+insert into line_segs_num_of_pass values (default, 1, 0, 1, 'line1');
+insert into line_segs_num_of_pass values (default, 2, 0, 1, 'line1');
+insert into line_segs_num_of_pass values (default, 3, 0, 1, 'line1');
+insert into line_segs_num_of_pass values (default, 4, 0, 1, 'line1');
 
-insert into line_segs_num_of_pass values (default, 0, 1, 1, 'line2');
-insert into line_segs_num_of_pass values (default, 1, 1, 1, 'line2');
-insert into line_segs_num_of_pass values (default, 2, 1, 1, 'line2');
-insert into line_segs_num_of_pass values (default, 3, 1, 1, 'line2');
+insert into line_segs_num_of_pass values (default, 0, 0, 1, 'line2');
+insert into line_segs_num_of_pass values (default, 1, 0, 1, 'line2');
+insert into line_segs_num_of_pass values (default, 2, 0, 1, 'line2');
+insert into line_segs_num_of_pass values (default, 3, 0, 1, 'line2');
 
-insert into line_segs_num_of_pass values (default, 0, 1, 2, 'line2');
-insert into line_segs_num_of_pass values (default, 1, 1, 2, 'line2');
-insert into line_segs_num_of_pass values (default, 2, 1, 2, 'line2');
-insert into line_segs_num_of_pass values (default, 3, 1, 2, 'line2');
+insert into line_segs_num_of_pass values (default, 0, 0, 2, 'line2');
+insert into line_segs_num_of_pass values (default, 1, 0, 2, 'line2');
+insert into line_segs_num_of_pass values (default, 2, 0, 2, 'line2');
+insert into line_segs_num_of_pass values (default, 3, 0, 2, 'line2');
 
-insert into line_segs_num_of_pass values (default, 0, 1, 1, 'line3');
-insert into line_segs_num_of_pass values (default, 1, 1, 1, 'line3');
-insert into line_segs_num_of_pass values (default, 2, 1, 1, 'line3');
-insert into line_segs_num_of_pass values (default, 3, 1, 1, 'line3');
+insert into line_segs_num_of_pass values (default, 0, 0, 1, 'line3');
+insert into line_segs_num_of_pass values (default, 1, 0, 1, 'line3');
+insert into line_segs_num_of_pass values (default, 2, 0, 1, 'line3');
+insert into line_segs_num_of_pass values (default, 3, 0, 1, 'line3');
 
-insert into line_segs_num_of_pass values (default, 0, 1, 4, 'line3');
-insert into line_segs_num_of_pass values (default, 1, 1, 4, 'line3');
-insert into line_segs_num_of_pass values (default, 2, 1, 4, 'line3');
-insert into line_segs_num_of_pass values (default, 3, 1, 4, 'line3');
+insert into line_segs_num_of_pass values (default, 0, 0, 4, 'line3');
+insert into line_segs_num_of_pass values (default, 1, 0, 4, 'line3');
+insert into line_segs_num_of_pass values (default, 2, 0, 4, 'line3');
+insert into line_segs_num_of_pass values (default, 3, 0, 4, 'line3');

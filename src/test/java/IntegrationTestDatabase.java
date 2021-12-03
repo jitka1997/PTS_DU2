@@ -1,4 +1,3 @@
-import org.checkerframework.checker.units.qual.A;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -10,7 +9,6 @@ import javax.persistence.Persistence;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 import static org.junit.Assert.*;
 
@@ -20,6 +18,7 @@ public class IntegrationTestDatabase {
     EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory(
             "default");
     EntityManager entityManager = entityManagerFactory.createEntityManager();
+    ;
 
 
     @Before
@@ -30,12 +29,14 @@ public class IntegrationTestDatabase {
         StopFactoryInterface stopFactory = new StopDatabaseFactory(entityManager);
         connectionSearch = new ConnectionSearch(lineFactory, lineSegmentFactory, stopFactory);
     }
-
-    @After
-    public void RunAfter(){
-        entityManager.close();
-        entityManagerFactory.close();
-    }
+// not sure how to open entity manager before every test and close after,
+// putting entityManager = entityManagerFactory.createEntityManager() in @Before and uncommenting @After part isn't working
+// now we don't close it after test, but it's not such a big deal because it is in test.
+//    @After
+//    public void runAfter(){
+//        entityManager.close();
+//        entityManagerFactory.close();
+//    }
 
     @Test
     public void testOneLineSegmentRoute() {

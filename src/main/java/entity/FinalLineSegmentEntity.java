@@ -17,8 +17,8 @@ public class FinalLineSegmentEntity {
     private int capacity;
     private String lineName;
     private String nextStop;
-    private String startingTime;
-    private String numOfPass;
+    private int startingTime;
+    private int numOfPass;
 
     @Id
     public int getPlace() {
@@ -65,21 +65,21 @@ public class FinalLineSegmentEntity {
         this.nextStop = nextStop;
     }
 
-    @Basic
-    public String getStartingTime() {
+    @Id
+    public int getStartingTime() {
         return startingTime;
     }
 
-    public void setStartingTime(String startingTime) {
+    public void setStartingTime(int startingTime) {
         this.startingTime = startingTime;
     }
 
-    @Basic
-    public String getNumOfPass() {
+    @Id
+    public int getNumOfPass() {
         return numOfPass;
     }
 
-    public void setNumOfPass(String numOfPass) {
+    public void setNumOfPass(int numOfPass) {
         this.numOfPass = numOfPass;
     }
 

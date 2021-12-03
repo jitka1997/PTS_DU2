@@ -2,10 +2,7 @@ import org.javatuples.Pair;
 import org.javatuples.Quartet;
 import org.javatuples.Triplet;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class MemoryFactoriesFactory {
     private final List<Pair<LineNameType, StopNameType>> lines;
@@ -30,13 +27,14 @@ public class MemoryFactoriesFactory {
         for (Pair<LineNameType, StopNameType> line : lines) {
             List<TimeType> startTimes = new ArrayList<TimeType>(
                     lineSegments.get(new Pair<>(line.getValue0(), 0)).getValue1().keySet());
+            Collections.sort(startTimes);
             int lineSegCount = 0;
             for (Map.Entry<Pair<LineNameType, Integer>, Quartet<TimeDiffType, Map<TimeType, Integer>, Integer, StopNameType>> lineSeg : lineSegments.entrySet())
                 if (lineSeg.getKey().getValue0().equals(line.getValue0()))lineSegCount++;
             tmpLines.put(line.getValue0(),
                     new Triplet<>(startTimes, line.getValue1(), lineSegCount));
         }
-        return new LineMemoryFactory(tmpLines, createLineSegmentFactory());
+        return new LineMemoryFactory(tmpLines);
     }
 
     public LineSegmentMemoryFactory createLineSegmentFactory() {

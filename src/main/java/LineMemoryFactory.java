@@ -6,14 +6,11 @@ import java.util.List;
 import java.util.Map;
 
 public class LineMemoryFactory implements LineFactoryInterface {
-    private final LineSegmentFactoryInterface lineSegmentFactory;
     private final Map<LineNameType, Triplet<List<TimeType>, StopNameType, Integer>> lines;
 
     public LineMemoryFactory(
-            Map<LineNameType, Triplet<List<TimeType>, StopNameType, Integer>> lines,
-            LineSegmentFactoryInterface lineSegmentFactory) {
+            Map<LineNameType, Triplet<List<TimeType>, StopNameType, Integer>> lines) {
         this.lines = Collections.unmodifiableMap(lines);
-        this.lineSegmentFactory = lineSegmentFactory;
     }
 
     @Override

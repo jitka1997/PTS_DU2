@@ -5,6 +5,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class LineDatabaseFactory implements LineFactoryInterface {
@@ -39,6 +40,7 @@ public class LineDatabaseFactory implements LineFactoryInterface {
             for (String time : t) {
                 times.add(new TimeType(Long.parseLong(time)));
             }
+            Collections.sort(times);
 
             newLine = new Line(newLineName, times, firstStop, numOfLineSegs, lineSegmentFactory);
 

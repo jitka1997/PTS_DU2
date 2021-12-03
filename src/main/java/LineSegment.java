@@ -1,6 +1,5 @@
 import org.javatuples.Triplet;
 
-import javax.xml.bind.SchemaOutputResolver;
 import java.util.Map;
 import java.util.Optional;
 
@@ -43,9 +42,11 @@ public class LineSegment implements LineSegmentInterface{
         return new Triplet<>(arrival, nextStop.getName(), !busIsFull);
     }
 
-    public void incrementCapacity(TimeType time) {
+    public boolean incrementCapacity(TimeType time) {
+        if(numberOfPassengers.get(time) >= capacity) return false;
         //TODO asi aj zapisat do databazy, nech sa to ulozi pre dalsie vyhladavania
         numberOfPassengers.put(time, numberOfPassengers.get(time) + 1);
+        return true;
     }
 
     @Override

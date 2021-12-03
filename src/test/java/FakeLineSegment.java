@@ -30,8 +30,9 @@ public class FakeLineSegment implements LineSegmentInterface{
     }
 
     @Override
-    public void incrementCapacity(TimeType time) {
+    public boolean incrementCapacity(TimeType time) {
         numberOfPassengers.put(time, numberOfPassengers.get(time) + 1);
+        return true;
     }
 
     public static int getNumOfPass(){

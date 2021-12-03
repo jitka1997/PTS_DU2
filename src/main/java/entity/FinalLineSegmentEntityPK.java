@@ -7,6 +7,8 @@ import java.io.Serializable;
 public class FinalLineSegmentEntityPK implements Serializable {
     private int place;
     private String lineName;
+    private int numOfPass;
+    private int startingTime;
 
     @Id
     public int getPlace() {
@@ -24,6 +26,15 @@ public class FinalLineSegmentEntityPK implements Serializable {
 
     public void setLineName(String lineName) {
         this.lineName = lineName;
+    }
+
+    @Id
+    public int getStartingTime() {
+        return startingTime;
+    }
+
+    public void setStartingTime(int startingTime) {
+        this.startingTime = startingTime;
     }
 
     @Override

@@ -23,4 +23,9 @@ public class LineSegmentMemoryFactory implements LineSegmentFactoryInterface{
         return new LineSegment(lineSegment.getValue0(), lineSegment.getValue1(),
                 lineSegment.getValue2(), lineName, lineSegment.getValue3());
     }
+
+    @Override
+    public void updateNumOfPass(LineNameType lineName, StopNameType nextStop, TimeType startTime) {
+
+    }
 }
